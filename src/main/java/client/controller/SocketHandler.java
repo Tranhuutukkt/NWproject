@@ -90,7 +90,6 @@ public class SocketHandler {
 
                     case SIGNAL_LOGOUT:
                         onReceiveLogout();
-                        running = false;
                         break;
                         
                     case NULL:
@@ -139,7 +138,7 @@ public class SocketHandler {
 
             // chuyển scene
             Client.closeScene(Client.SceneName.LOGIN);
-            Client.openScene(Client.SceneName.MENU);
+            Client.openScene(Client.SceneName.CONNECTSERVER);
         }
     }
     
@@ -166,6 +165,7 @@ public class SocketHandler {
 
         // chuyển scene
         Client.closeAllScene();
+        Client.openScene(Client.SceneName.LOGIN);
     }
     
     private void showMenu(String received) {
