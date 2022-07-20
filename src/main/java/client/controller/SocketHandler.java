@@ -8,6 +8,7 @@ import client.Client;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,13 +67,9 @@ public class SocketHandler {
             try {
                 // receive the data from server
                 String received = dis.readLine();
-//
-//                // decrypt data if needed
-//                if (aes != null) {
-//                    received = aes.decrypt(received);
-//                }
 
-                System.out.println("RECEIVED: " + received);
+                System.out.println("RECEIVED: " + received + "abc" + received.length());
+                System.out.println("received: " + Arrays.toString(received.getBytes()) + "abc");
 
                 // process received data
                 StreamData.Type type = StreamData.getTypeFromData(received);
@@ -86,9 +83,14 @@ public class SocketHandler {
                     case SIGNAL_CREATEUSER:
                         onReceiveSignup(received);
                         break;
+                        
+                    case SIGNAL_MENU:
+                        showMenu(received);
+                        break;
 
-                    case LOGOUT:
-                        onReceiveLogout(received);
+                    case SIGNAL_LOGOUT:
+                        onReceiveLogout();
+                        running = false;
                         break;
                         
                     case NULL:
@@ -123,20 +125,21 @@ public class SocketHandler {
         // get status from data
         String[] splitted = received.split("#");
         String status = splitted[1];
+        System.out.println("Status: " + status);
 
-        if (status.equals("failed")) {
+        if (status.equals("error")) {
       
       // hiển thị lỗi
             String failedMsg = splitted[2];
             JOptionPane.showMessageDialog(Client.loginScene, failedMsg, "Lỗi", JOptionPane.ERROR_MESSAGE);
 
-        } else if (status.equals("success")) {
+        } else if (status.equals("ok")) {
             // lưu user login
             this.user = splitted[2];
 
             // chuyển scene
             Client.closeScene(Client.SceneName.LOGIN);
-            //Client.openScene(RunClient.SceneName.MAINMENU);
+            Client.openScene(Client.SceneName.MENU);
         }
     }
     
@@ -157,20 +160,24 @@ public class SocketHandler {
         }
     }
     
-    private void onReceiveLogout(String received) {
+    private void onReceiveLogout() {
         // xoa user
         this.user = null;
 
         // chuyển scene
         Client.closeAllScene();
-        Client.openScene(Client.SceneName.LOGIN);
+    }
+    
+    private void showMenu(String received) {
+        // chuyển scene
+        Client.openScene(Client.SceneName.MENU);
     }
     
     public void login(String user, String password) {
 
         // prepare data
         String data = StreamData.Type.SIGNAL_CHECKLOGIN.name() + "#" + user + "#" + password;
-        System.out.print(data);
+        System.out.println("Login: " + data);
         // send data
         sendData(data);
     }
@@ -185,15 +192,27 @@ public class SocketHandler {
         sendData(data);
     }
     
+    public void logout() {
+        // prepare data
+        String data = StreamData.Type.SIGNAL_LOGOUT.name();
+
+        // send data
+        sendData(data);
+    }
+    
     public void sendData(String data) {
         try {
             dos.write(data);
-            dos.newLine(); // kết thúc dòng
+            //dos.newLine(); // kết thúc dòng
             dos.flush(); 
 
         } catch (IOException ex) {
             Logger.getLogger(SocketHandler.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public String getUser() {
+        return this.user;
     }
 }

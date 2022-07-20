@@ -10,6 +10,7 @@ import client.view.helper.LookAndFeel;
 import client.view.scene.ConnectServer;
 import client.view.scene.Login;
 import client.view.scene.Signup;
+import client.view.scene.Menu;
 
 
 public class Client {
@@ -17,13 +18,15 @@ public class Client {
     public enum SceneName {
         CONNECTSERVER,
         LOGIN,
-        SIGNUP
+        SIGNUP,
+        MENU
     }
 
     // scenes
     public static ConnectServer connectServerScene;
     public static Login loginScene;
     public static Signup signupScene;
+    public static Menu menuScene;
 
     // controller 
     public static SocketHandler socketHandler;
@@ -38,6 +41,7 @@ public class Client {
         connectServerScene = new ConnectServer();
         loginScene = new Login();
         signupScene = new Signup();
+        menuScene = new Menu();
     }
 
     public static void openScene(SceneName sceneName) {
@@ -57,6 +61,10 @@ public class Client {
                     signupScene = new Signup();
                     signupScene.setVisible(true);
                     break;
+                case MENU:
+                    menuScene = new Menu();
+                    menuScene.setVisible(true);
+                    break;
                 default:
                     break;
             }
@@ -75,6 +83,9 @@ public class Client {
                 case SIGNUP:
                     signupScene.dispose();
                     break;
+                case MENU:
+                    menuScene.dispose();
+                    break;
                 default:
                     break;
             }
@@ -85,6 +96,7 @@ public class Client {
         connectServerScene.dispose();
         loginScene.dispose();
         signupScene.dispose();
+        menuScene.dispose();
     }
 
     public static void main(String[] args) {

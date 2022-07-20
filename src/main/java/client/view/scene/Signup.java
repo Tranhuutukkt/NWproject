@@ -30,6 +30,9 @@ public class Signup extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txName = new javax.swing.JTextField();
@@ -69,7 +72,12 @@ public class Signup extends javax.swing.JFrame {
             }
         });
 
-        btnLogin.setText("jButton1");
+        btnLogin.setText("LOGIN");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,13 +105,13 @@ public class Signup extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txRetypePassword)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(6, 6, 6)
-                                                .addComponent(btnLogin))
-                                            .addComponent(btnSignup))
+                                        .addComponent(btnSignup)
                                         .addGap(0, 124, Short.MAX_VALUE)))))))
                 .addGap(22, 22, 22))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnLogin)
+                .addGap(163, 163, 163))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +154,6 @@ public class Signup extends javax.swing.JFrame {
             String user = txName.getText();
             String password = new String(txPassword.getPassword());
             String rePass = new String(txRetypePassword.getPassword());
-            String name = txName.getText();
 
             if (!rePass.equals(password)) {
                 JOptionPane.showMessageDialog(this, "Nhập lại mật khẩu chưa khớp", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -160,10 +167,11 @@ public class Signup extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSignupActionPerformed
 
-//    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {                                          
-//        this.dispose();
-//        Client.openScene(Client.SceneName.LOGIN);
-//    }  
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        this.dispose();
+        Client.openScene(Client.SceneName.LOGIN);
+    }//GEN-LAST:event_btnLoginActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -202,6 +210,9 @@ public class Signup extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnSignup;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
